@@ -1,6 +1,8 @@
 package com.starking.money.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.*;
 
@@ -17,6 +19,7 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
+	@NotNull
+	@Size(min = 4, max = 50)
 	private String nome;
-
 }
