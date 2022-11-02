@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starking.money.event.RecursoCriadoEvent;
@@ -61,5 +62,11 @@ public class PessoaController {
 	public ResponseEntity<?> atualizar(@PathVariable("codigo") Long codigo, @Valid @RequestBody Pessoa pessoa) {
 		this.pessoaService.atualizar(codigo, pessoa);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/{codigo}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarParcialAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {
+		this.pessoaService.atualizarPropriedadeAtivo(codigo, ativo);
 	}
 }
