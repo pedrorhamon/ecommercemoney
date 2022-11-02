@@ -29,4 +29,9 @@ public class CategoriaService {
 	public Optional<Categoria> buscarPorId(Categoria categoria) {
 		return this.categoriaRepository.findById(categoria.getCodigo());
 	}
+	
+	@Transactional
+	public void excluir(Categoria categoria) {
+		this.categoriaRepository.deleteById(categoria.getCodigo());
+	}
 }
