@@ -29,4 +29,9 @@ public class PessoaService {
 	public Optional<Pessoa> buscarPorId(Pessoa pessoa) {
 		return this.pessoaRepository.findById(pessoa.getCodigo());
 	}
+	
+	@Transactional
+	public void excluir(Pessoa pessoa) {
+		this.pessoaRepository.deleteById(pessoa.getCodigo());
+	}
 }

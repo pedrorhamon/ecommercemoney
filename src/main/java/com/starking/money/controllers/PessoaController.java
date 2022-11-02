@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,9 +45,13 @@ public class PessoaController {
 	@PostMapping
 	public ResponseEntity<?> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
 		Pessoa pessoaSalvar = this.pessoaService.salvar(pessoa);
-		
-		this.publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoa.getCodigo()));
-		
+		this.publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoa.getCodigo()));	
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalvar);
 	}
+	
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<?> deletar(Pessoa pessoa) {
+		this.pessoaService.excluir(pessoa);
+		return ResponseEntity.noContent().build();
+	}	
 }
