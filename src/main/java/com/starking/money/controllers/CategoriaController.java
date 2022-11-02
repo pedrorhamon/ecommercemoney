@@ -39,7 +39,12 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("/{codigo}")
-	public Optional<Categoria> buscarPeloCodigo(Categoria categoria) {
-		return this.categoriaRepository.findById(categoria.getCodigo());
+	public ResponseEntity<?> buscarPeloCodigo(Categoria categoria) {
+		Optional<Categoria> categoriaOptional = this.categoriaRepository.findById(categoria.getCodigo());
+		return !categoriaOptional.isPresent() ? ResponseEntity.notFound().build() : ResponseEntity.ok(categoriaOptional);
+//		if(!categoriaOptional.isPresent()) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		return ResponseEntity.ok(categoriaOptional);
 	}
 }
