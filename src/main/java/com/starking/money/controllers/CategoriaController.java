@@ -36,7 +36,7 @@ public class CategoriaController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> criar(@RequestBody @Valid Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalvar = this.categoriaService.salvar(categoria, response);
+		Categoria categoriaSalvar = this.categoriaService.salvar(categoria);
 		URI uri = uriParaUrl(response, categoriaSalvar);
 		return ResponseEntity.created(uri).body(categoriaSalvar);
 	}

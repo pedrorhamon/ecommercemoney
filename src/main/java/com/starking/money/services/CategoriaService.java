@@ -3,7 +3,6 @@ package com.starking.money.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,8 @@ public class CategoriaService {
 	}
 	
 	@Transactional
-	public Categoria salvar(Categoria categoria, HttpServletResponse response) {
-		Categoria categoriaSalvar = this.categoriaRepository.save(categoria);
-		return categoriaSalvar;
+	public Categoria salvar(Categoria categoria) {
+		return this.categoriaRepository.save(categoria);
 	}
 	
 	public Optional<Categoria> buscarPorId(Categoria categoria) {
