@@ -38,4 +38,9 @@ public class LancamentoService {
 		}
 		return this.lancamentoRepository.save(lancamento);
 	}
+	
+	@Transactional
+	public void deletar(Lancamento lancamento) {
+		this.lancamentoRepository.deleteById(lancamento.getCodigo());
+	}
 }

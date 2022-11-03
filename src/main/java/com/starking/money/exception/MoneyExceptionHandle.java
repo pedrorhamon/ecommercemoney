@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.starking.money.exception.MoneyExceptionHandle.Erro;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
