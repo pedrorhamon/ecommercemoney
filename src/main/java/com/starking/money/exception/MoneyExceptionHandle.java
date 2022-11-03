@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.starking.money.exception.MoneyExceptionHandle.Erro;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -60,6 +62,14 @@ public class MoneyExceptionHandle extends ResponseEntityExceptionHandler {
 		String mensagemDev = ExceptionUtils.getRootCauseMessage(ex);
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDev));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+	
+	@ExceptionHandler({ PessoaInexistenteOuInativoException.class })
+	public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativoException ex) {
+		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
+		String mensagemDesenvolvedor = ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return ResponseEntity.badRequest().body(erros);
 	}
 	
 	private List<Erro> criarListaErros(BindingResult binding) {
