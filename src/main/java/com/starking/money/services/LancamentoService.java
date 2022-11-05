@@ -1,11 +1,12 @@
 package com.starking.money.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.starking.money.exception.PessoaInexistenteOuInativoException;
@@ -23,8 +24,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaService pessoaService;
 
-	public List<Lancamento> buscar(LancamentoFilter lancamentoFilter) {
-		return this.lancamentoRepository.filtrar(lancamentoFilter);
+	public Page<Lancamento> buscar(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return this.lancamentoRepository.filtrar(lancamentoFilter, pageable);
 	}
 
 	public Optional<Lancamento> buscarPorId(Lancamento lancamento) {
