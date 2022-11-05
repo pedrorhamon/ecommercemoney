@@ -12,6 +12,7 @@ import com.starking.money.exception.PessoaInexistenteOuInativoException;
 import com.starking.money.model.Lancamento;
 import com.starking.money.model.Pessoa;
 import com.starking.money.repositories.LancamentoRepository;
+import com.starking.money.repositories.filter.LancamentoFilter;
 
 @Service
 public class LancamentoService {
@@ -22,8 +23,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaService pessoaService;
 
-	public List<Lancamento> buscar() {
-		return this.lancamentoRepository.findAll();
+	public List<Lancamento> buscar(LancamentoFilter lancamentoFilter) {
+		return this.lancamentoRepository.filtrar(lancamentoFilter);
 	}
 
 	public Optional<Lancamento> buscarPorId(Lancamento lancamento) {

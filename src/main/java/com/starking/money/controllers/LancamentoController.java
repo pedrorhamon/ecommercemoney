@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starking.money.event.RecursoCriadoEvent;
 import com.starking.money.model.Lancamento;
+import com.starking.money.repositories.filter.LancamentoFilter;
 import com.starking.money.services.LancamentoService;
 
 @RestController
@@ -32,8 +33,8 @@ public class LancamentoController {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	public List<Lancamento> buscar() {
-		return this.lancamentoService.buscar();
+	public List<Lancamento> buscar(LancamentoFilter lanlcamentoFilter) {
+		return this.lancamentoService.buscar(lanlcamentoFilter);
 	}
 	
 	@GetMapping("/{codigo}")
