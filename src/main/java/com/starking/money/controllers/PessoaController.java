@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,17 +36,20 @@ public class PessoaController {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')" )
 	public List<Pessoa> listar() {
 		return this.pessoaService.listar();
 	}
 	
 	@GetMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')" )
 	public ResponseEntity<?> buscarPorId(Pessoa pessoa) {
 		Optional<Pessoa> pessoaOptional = this.pessoaService.buscarPorId(pessoa);
 		return !pessoaOptional.isPresent() ? ResponseEntity.notFound().build() : ResponseEntity.ok(pessoaOptional);
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')" )
 	public ResponseEntity<?> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
 		Pessoa pessoaSalvar = this.pessoaService.salvar(pessoa);
 		this.publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoa.getCodigo()));	
@@ -53,6 +57,7 @@ public class PessoaController {
 	}
 	
 	@DeleteMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and hasAuthority('SCOPE_write')" )
 	public ResponseEntity<?> deletar(Pessoa pessoa) {
 		this.pessoaService.excluir(pessoa);
 		return ResponseEntity.noContent().build();

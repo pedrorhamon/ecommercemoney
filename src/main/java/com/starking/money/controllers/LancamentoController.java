@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,17 +35,20 @@ public class LancamentoController {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')" )
 	public Page<Lancamento> buscar(LancamentoFilter lanlcamentoFilter, Pageable pageable) {
 		return this.lancamentoService.buscar(lanlcamentoFilter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')" )
 	public ResponseEntity<?> buscarPorId(Lancamento lancamento) {
 		Optional<Lancamento> lancamentoOptional = this.lancamentoService.buscarPorId(lancamento);
 		return !lancamentoOptional.isPresent() ? ResponseEntity.notFound().build() : ResponseEntity.ok(lancamentoOptional);
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_write')" )
 	public ResponseEntity<?> salvar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
 		Lancamento lancamentoSalvar = this.lancamentoService.salvar(lancamento);
 		this.publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamento.getCodigo()));	
@@ -52,6 +56,7 @@ public class LancamentoController {
 	}
 	
 	@DeleteMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and hasAuthority('SCOPE_write')" )
 	public ResponseEntity<?> deletar(Lancamento lancamento) {
 		this.lancamentoService.deletar(lancamento);
 		return ResponseEntity.noContent().build();		
