@@ -1,6 +1,5 @@
 package com.starking.money.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -8,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.starking.money.model.Pessoa;
@@ -19,8 +20,8 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
-	public List<Pessoa> listar() {
-		return this.pessoaRepository.findAll();
+	public Page<Pessoa> listar(String nome, Pageable pageable) {
+		return this.pessoaRepository.findByNomeContaining(nome, pageable);
 	}
 	
 	@Transactional
