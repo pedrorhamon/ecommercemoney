@@ -1,4 +1,4 @@
-package com.starking.money.config;
+package com.starking.money.cors;
 
 import java.io.IOException;
 
