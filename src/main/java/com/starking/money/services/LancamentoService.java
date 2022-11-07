@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.starking.money.exception.PessoaInexistenteOuInativoException;
 import com.starking.money.model.Lancamento;
 import com.starking.money.model.Pessoa;
+import com.starking.money.model.dto.LancamentoDTO;
 import com.starking.money.repositories.LancamentoRepository;
 import com.starking.money.repositories.filter.LancamentoFilter;
 
@@ -44,5 +45,9 @@ public class LancamentoService {
 	@Transactional
 	public void deletar(Lancamento lancamento) {
 		this.lancamentoRepository.deleteById(lancamento.getCodigo());
+	}
+	
+	public Page<LancamentoDTO> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return this.lancamentoRepository.resumir(lancamentoFilter, pageable);
 	}
 }

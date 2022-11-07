@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starking.money.event.RecursoCriadoEvent;
 import com.starking.money.model.Lancamento;
+import com.starking.money.model.dto.LancamentoDTO;
 import com.starking.money.repositories.filter.LancamentoFilter;
 import com.starking.money.services.LancamentoService;
 
@@ -38,6 +39,12 @@ public class LancamentoController {
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')" )
 	public Page<Lancamento> buscar(LancamentoFilter lanlcamentoFilter, Pageable pageable) {
 		return this.lancamentoService.buscar(lanlcamentoFilter, pageable);
+	}
+	
+	@GetMapping(params = "resumo")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+	public Page<LancamentoDTO> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return this.lancamentoService.resumir(lancamentoFilter, pageable);
 	}
 	
 	@GetMapping("/{codigo}")
