@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,8 +31,15 @@ public class Usuario {
 	@Id
 	private Long codigo;
 
+	@NotNull
+	@Size(min = 4, max = 200)
 	private String nome;
+	
+	@NotNull
+	@Email
 	private String email;
+	
+	@NotNull
 	private String senha;
 
 	@ManyToMany(fetch = FetchType.EAGER)
