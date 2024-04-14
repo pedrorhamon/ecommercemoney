@@ -1,3 +1,3 @@
 # ecommercemoney
 
-spring, java 11
+spring, java 17
