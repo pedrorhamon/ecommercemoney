@@ -1,3 +1,3 @@
 # ecommercemoney
 
-spring, java 21 utilizando lambads em  relatórios 
+spring, java 21 relatórios 
