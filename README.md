@@ -1,3 +1,3 @@
 # ecommercemoney
 
-spring, java 21 relatórios 
+spring, java relatórios 
